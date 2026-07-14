@@ -1,107 +1,158 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Poker Royale - Login</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-    *{margin:0;padding:0;box-sizing:border-box;}
-    body{font-family:'Inter',sans-serif;background:#0a0a0f;color:#e8e8f0;min-height:100vh;display:flex;align-items:center;justify-content:center;}
-    .container{max-width:400px;width:100%;padding:20px;text-align:center;}
-    .logo{font-size:60px;margin-bottom:16px;}
-    h1{font-size:40px;font-weight:800;background:linear-gradient(135deg,#f59e0b,#eab308,#10b981);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px;}
-    .sub{color:rgba(255,255,255,0.4);margin-bottom:24px;font-size:14px;}
-    .glass{background:rgba(255,255,255,0.04);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:32px;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
-    .input{width:100%;padding:12px 16px;font-size:14px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;color:white;outline:none;margin-bottom:12px;font-family:'Inter',sans-serif;}
-    .input:focus{border-color:rgba(245,158,11,0.5);}
-    .btn{width:100%;padding:12px;font-size:14px;font-weight:600;border:none;border-radius:10px;cursor:pointer;background:linear-gradient(135deg,#f59e0b,#eab308);color:#0a0a0f;font-family:'Inter',sans-serif;}
-    .btn:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(245,158,11,0.4);}
-    .tabs{display:flex;gap:8px;margin-bottom:20px;}
-    .tab{flex:1;padding:10px;font-size:13px;font-weight:600;border:none;border-radius:8px;cursor:pointer;background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.5);font-family:'Inter',sans-serif;}
-    .tab.active{background:rgba(245,158,11,0.15);color:#f59e0b;border:1px solid rgba(245,158,11,0.2);}
-    .form{display:none;flex-direction:column;gap:0;}
-    .form.active{display:flex;}
-    .error{color:#ef4444;font-size:13px;margin-bottom:12px;}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poker Royale</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1a3e 50%, #0d0d2b 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 60px 40px;
+            width: 420px;
+            text-align: center;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+        }
+        .logo { font-size: 64px; margin-bottom: 10px; }
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #f7971e, #ffd200);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+        .subtitle {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+        }
+        input {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            font-size: 16px;
+            outline: none;
+            transition: 0.3s;
+        }
+        input:focus {
+            border-color: #f7971e;
+            box-shadow: 0 0 20px rgba(247, 151, 30, 0.2);
+        }
+        input::placeholder { color: rgba(255, 255, 255, 0.3); }
+        .btn {
+            width: 100%;
+            padding: 16px;
+            margin-top: 16px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            background: linear-gradient(135deg, #f7971e, #ffd200);
+            color: #0a0e27;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(247, 151, 30, 0.3);
+        }
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .error {
+            color: #ff4444;
+            font-size: 13px;
+            margin-top: 12px;
+            display: none;
+        }
+        .players-online {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 13px;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <div class="logo">♦️</div>
-    <h1>POKER ROYALE</h1>
-    <p class="sub">Real-time Texas Hold'em Multiplayer</p>
-    <div class="glass">
-      <div class="tabs">
-        <button class="tab active" onclick="switchTab('login')">Sign In</button>
-        <button class="tab" onclick="switchTab('register')">Register</button>
-      </div>
-      <div id="loginForm" class="form active">
-        <input type="text" id="loginUser" class="input" placeholder="Username" autocomplete="off">
-        <input type="password" id="loginPass" class="input" placeholder="Password">
-        <div id="loginError" class="error" style="display:none;"></div>
-        <button class="btn" onclick="login()">Sign In</button>
-      </div>
-      <div id="registerForm" class="form">
-        <input type="text" id="regUser" class="input" placeholder="Username (3-20 chars)" autocomplete="off">
-        <input type="password" id="regPass" class="input" placeholder="Password (4+ chars)">
-        <div id="regError" class="error" style="display:none;"></div>
-        <button class="btn" onclick="register()">Create Account</button>
-      </div>
+    <div class="container">
+        <div class="logo">♠️</div>
+        <h1>POKER ROYALE</h1>
+        <p class="subtitle">Texas Hold'em</p>
+        
+        <input type="text" id="usernameInput" placeholder="Enter your username" maxlength="20" autocomplete="off">
+        <div class="error" id="errorMsg">Please enter a username</div>
+        <button class="btn" id="joinBtn" disabled>Join the Table</button>
+        
+        <div class="players-online" id="statusMsg">Enter a name to get started</div>
     </div>
-  </div>
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const err = params.get('err');
-    if (err === 'invalid') showError('login', 'Invalid username/password');
-    else if (err === 'taken') showError('reg', 'Username already taken');
-    else if (err === 'auth') showError('login', 'Invalid credentials');
 
-    function switchTab(tab) {
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.form').forEach(f => f.classList.remove('active'));
-      if (tab === 'login') {
-        document.querySelector('.tabs button:first-child').classList.add('active');
-        document.getElementById('loginForm').classList.add('active');
-      } else {
-        document.querySelector('.tabs button:last-child').classList.add('active');
-        document.getElementById('registerForm').classList.add('active');
-      }
-    }
+    <script>
+        const input = document.getElementById('usernameInput');
+        const btn = document.getElementById('joinBtn');
+        const error = document.getElementById('errorMsg');
+        const status = document.getElementById('statusMsg');
 
-    function showError(form, msg) {
-      const el = document.getElementById(form + 'Error');
-      el.textContent = msg;
-      el.style.display = 'block';
-    }
+        input.addEventListener('input', () => {
+            const name = input.value.trim();
+            btn.disabled = name.length === 0;
+            error.style.display = 'none';
+            if (name.length > 0) {
+                status.textContent = `Ready to play as "${name}"`;
+                status.style.color = 'rgba(255,255,255,0.6)';
+            } else {
+                status.textContent = 'Enter a name to get started';
+                status.style.color = 'rgba(255,255,255,0.3)';
+            }
+        });
 
-    async function login() {
-      const u = document.getElementById('loginUser').value;
-      const p = document.getElementById('loginPass').value;
-      if (!u || !p) return showError('login', 'Fill in all fields');
-      const form = new FormData();
-      form.append('username', u);
-      form.append('password', p);
-      const res = await fetch('/api/login', { method: 'POST', body: new URLSearchParams(form) });
-      if (res.redirected) window.location.href = res.url;
-    }
+        btn.addEventListener('click', () => {
+            const name = input.value.trim();
+            if (!name) {
+                error.style.display = 'block';
+                return;
+            }
+            localStorage.setItem('poker_username', name);
+            status.textContent = `Welcome, ${name}! Game coming soon...`;
+            btn.textContent = 'Entering...';
+            btn.disabled = true;
+            // In the future, this will redirect to the game lobby
+            setTimeout(() => {
+                alert(`Welcome to the table, ${name}! The full game is coming soon.`);
+                btn.textContent = 'Join the Table';
+                btn.disabled = false;
+            }, 500);
+        });
 
-    async function register() {
-      const u = document.getElementById('regUser').value;
-      const p = document.getElementById('regPass').value;
-      if (!u || !p) return showError('reg', 'Fill in all fields');
-      if (u.length < 3) return showError('reg', 'Username too short');
-      if (p.length < 4) return showError('reg', 'Password too short');
-      const form = new FormData();
-      form.append('username', u);
-      form.append('password', p);
-      const res = await fetch('/api/register', { method: 'POST', body: new URLSearchParams(form) });
-      if (res.redirected) window.location.href = res.url;
-    }
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        if (document.getElementById('loginForm').classList.contains('active')) login();
-        else register();
-      }
-    });
-  </script>
+        // Check if already have a name stored
+        const saved = localStorage.getItem('poker_username');
+        if (saved) {
+            input.value = saved;
+            btn.disabled = false;
+            status.textContent = `Welcome back, ${saved}!`;
+            status.style.color = 'rgba(255,255,255,0.6)';
+        }
+    </script>
 </body>
 </html>
